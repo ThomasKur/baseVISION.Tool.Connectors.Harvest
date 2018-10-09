@@ -2,6 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Thomas Kurth</Authors>
+    <Product>GetHarvest API Client</Product>
+    <Description>This library allows connecting to the Harvest Timetracking API v2 and requesting and modifying all entities from there. https://www.getharvest.com/
+Instead of other library it is using the new version 2 OAuth based API.</Description>
+    <PackageLicenseUrl>https://github.com/ThomasKur/baseVISION.Tool.Connectors.Harvest/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Thomas Kurth</Copyright>
+    <PackageProjectUrl>https://github.com/ThomasKur/baseVISION.Tool.Connectors.Harvest/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ThomasKur/baseVISION.Tool.Connectors.Harvest/</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageReleaseNotes>1.0.0: First Release</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>

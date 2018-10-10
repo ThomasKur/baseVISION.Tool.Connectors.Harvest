@@ -9,7 +9,7 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
     {
         [JsonProperty("id")]
         public long Id { get; set; }
-        public bool ShouldSerializeId()
+        public virtual bool ShouldSerializeId()
         {
             return false;
         }
@@ -27,7 +27,7 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
 
         [JsonProperty("amount")]
         public decimal Amount { get; set; }
-        public bool ShouldSerializeAmount()
+        public virtual bool ShouldSerializeAmount()
         {
             return false;
         }

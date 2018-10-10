@@ -10,13 +10,13 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
         private long? _ClientId;
         [JsonProperty("id")]
         public long Id { get; set; }
-        public bool ShouldSerializeId()
+        public virtual bool ShouldSerializeId()
         {
             return false;
         }
         [JsonProperty("client_key")]
         public string ClientKey { get; set; }
-        public bool ShouldSerializeClientKey()
+        public virtual bool ShouldSerializeClientKey()
         {
             return false;
         }
@@ -34,7 +34,7 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
 
         [JsonProperty("tax_amount")]
         public decimal? TaxAmount { get; set; }
-        public bool ShouldSerializeTaxAmount()
+        public virtual bool ShouldSerializeTaxAmount()
         {
             return false;
         }
@@ -43,7 +43,7 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
 
         [JsonProperty("tax2_amount")]
         public decimal? Tax2Amount { get; set; }
-        public bool ShouldSerializeTax2Amount()
+        public virtual bool ShouldSerializeTax2Amount()
         {
             return false;
         }
@@ -52,7 +52,7 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
 
         [JsonProperty("discount_amount")]
         public decimal? DiscountAmount { get; set; }
-        public bool ShouldSerializeDiscountAmount()
+        public virtual bool ShouldSerializeDiscountAmount()
         {
             return false;
         }
@@ -73,19 +73,19 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
 
         [JsonProperty("created_at")]
         public DateTimeOffset? CreatedAt { get; set; }
-        public bool ShouldSerializeCreatedAt()
+        public virtual bool ShouldSerializeCreatedAt()
         {
             return false;
         }
         [JsonProperty("updated_at")]
         public DateTimeOffset? UpdatedAt { get; set; }
-        public bool ShouldSerializeUpdatedAt()
+        public virtual bool ShouldSerializeUpdatedAt()
         {
             return false;
         }
         [JsonProperty("accepted_at")]
         public DateTimeOffset? AcceptedAt { get; set; }
-        public bool ShouldSerializeAcceptedAt()
+        public virtual bool ShouldSerializeAcceptedAt()
         {
             return false;
         }

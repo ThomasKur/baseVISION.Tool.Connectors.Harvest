@@ -12,7 +12,7 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
 
         [JsonProperty("id")]
         public long? Id { get; set; }
-        public bool ShouldSerializeId()
+        public virtual bool ShouldSerializeId()
         {
             return false;
         }
@@ -27,13 +27,13 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
 
         [JsonProperty("created_at")]
         public DateTimeOffset? CreatedAt { get; set; }
-        public bool ShouldSerializeCreatedAt()
+        public virtual bool ShouldSerializeCreatedAt()
         {
             return false;
         }
         [JsonProperty("updated_at")]
         public DateTimeOffset? UpdatedAt { get; set; }
-        public bool ShouldSerializeUpdatedAt()
+        public virtual bool ShouldSerializeUpdatedAt()
         {
             return false;
         }
@@ -43,14 +43,14 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
         [JsonProperty("project")]
         public LookupObject Project { get; set; }
 
-        public bool ShouldSerializeProject()
+        public virtual bool ShouldSerializeProject()
         {
             return false;
         }
         [JsonProperty("client")]
         public LookupObject Client { get; set; }
 
-        public bool ShouldSerializeClient()
+        public virtual bool ShouldSerializeClient()
         {
             return false;
         }
@@ -72,7 +72,7 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
             }
             set { _UserId = value; }
         }
-        public bool ShouldSerializeUser()
+        public virtual bool ShouldSerializeUser()
         {
             return false;
         }

@@ -13,7 +13,7 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
         private long? _ProjectId;
         [JsonProperty("id")]
         public long? Id { get; set; }
-        public bool ShouldSerializeId()
+        public virtual bool ShouldSerializeId()
         {
             return false;
         }
@@ -38,13 +38,13 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
             }
             set { _UserId = value; }
         }
-        public bool ShouldSerializeUser()
+        public virtual bool ShouldSerializeUser()
         {
             return false;
         }
         [JsonProperty("client")]
         public LookupObject Client { get; set; }
-        public bool ShouldSerializeClient()
+        public virtual bool ShouldSerializeClient()
         {
             return false;
         }
@@ -66,7 +66,7 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
             }
             set { _ProjectId = value; }
         }
-        public bool ShouldSerializeProject()
+        public virtual bool ShouldSerializeProject()
         {
             return false;
         }
@@ -88,19 +88,19 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
             }
             set { _TaskId = value; }
         }
-        public bool ShouldSerializeTask()
+        public virtual bool ShouldSerializeTask()
         {
             return false;
         }
         [JsonProperty("user_assignment")]
         public ProjectAssignment UserAssignment { get; set; }
-        public bool ShouldSerializeUserAssignment()
+        public virtual bool ShouldSerializeUserAssignment()
         {
             return false;
         }
         [JsonProperty("task_assignment")]
         public TaskAssignment TaskAssignment { get; set; }
-        public bool ShouldSerializeTaskAssignment()
+        public virtual bool ShouldSerializeTaskAssignment()
         {
             return false;
         }
@@ -112,61 +112,61 @@ namespace baseVISION.Tool.Connectors.Harvest.Model
 
         [JsonProperty("created_at")]
         public DateTimeOffset? CreatedAt { get; set; }
-        public bool ShouldSerializeCreatedAt()
+        public virtual bool ShouldSerializeCreatedAt()
         {
             return false;
         }
         [JsonProperty("updated_at")]
         public DateTimeOffset? UpdatedAt { get; set; }
-        public bool ShouldSerializeUpdatedAt()
+        public virtual bool ShouldSerializeUpdatedAt()
         {
             return false;
         }
         [JsonProperty("is_locked")]
         public bool IsLocked { get; set; }
-        public bool ShouldSerializeIsLocked()
+        public virtual bool ShouldSerializeIsLocked()
         {
             return false;
         }
         [JsonProperty("locked_reason")]
         public string LockedReason { get; set; }
-        public bool ShouldSerializeLockedReason()
+        public virtual bool ShouldSerializeLockedReason()
         {
             return false;
         }
         [JsonProperty("is_closed")]
         public bool IsClosed { get; set; }
-        public bool ShouldSerializeIsClosed()
+        public virtual bool ShouldSerializeIsClosed()
         {
             return false;
         }
         [JsonProperty("is_billed")]
         public bool IsBilled { get; set; }
-        public bool ShouldSerializeIsBilled()
+        public virtual bool ShouldSerializeIsBilled()
         {
             return false;
         }
         [JsonProperty("timer_started_at")]
         public DateTimeOffset? TimerStartedAt { get; set; }
-        public bool ShouldSerializeTimerStartedAt()
+        public virtual bool ShouldSerializeTimerStartedAt()
         {
             return false;
         }
         [JsonProperty("started_time")]
         public DateTimeOffset? StartedTime { get; set; }
-        public bool ShouldSerializeStartedTime()
+        public virtual bool ShouldSerializeStartedTime()
         {
             return false;
         }
         [JsonProperty("ended_time")]
         public DateTimeOffset? EndedTime { get; set; }
-        public bool ShouldSerializeEndedTime()
+        public virtual bool ShouldSerializeEndedTime()
         {
             return false;
         }
         [JsonProperty("is_running")]
         public bool IsRunning { get; set; }
-        public bool ShouldSerializeIsRunning()
+        public virtual bool ShouldSerializeIsRunning()
         {
             return false;
         }

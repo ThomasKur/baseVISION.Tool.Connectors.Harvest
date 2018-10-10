@@ -11,9 +11,13 @@ Instead of other library it is using the new version 2 OAuth based API.</Descrip
     <PackageProjectUrl>https://github.com/ThomasKur/baseVISION.Tool.Connectors.Harvest/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ThomasKur/baseVISION.Tool.Connectors.Harvest/</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageReleaseNotes>1.0.0: First Release</PackageReleaseNotes>
+    <PackageReleaseNotes>1.0.1: Make ShouldSerialize methods virtual to allow override. 
+1.0.0: First Release</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

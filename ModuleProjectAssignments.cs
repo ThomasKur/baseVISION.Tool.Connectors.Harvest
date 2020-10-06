@@ -76,6 +76,16 @@ namespace baseVISION.Tool.Connectors.Harvest
             return client.Execute<ProjectAssignment>(r);
         }
 
+        public ProjectAssignment AddUserAssignment(long projectId, long userId)
+        {
+            RestRequest r = new RestRequest("/projects/{projectId}/user_assignments", Method.POST);
+            r.AddUrlSegment("projectId", projectId);
+            r.AddQueryParameter("user_id", userId.ToString());
+            r.AddQueryParameter("is_project_manager", "false");
+
+            return client.Execute<ProjectAssignment>(r);
+        }
+
         public ProjectAssignment Update(ProjectAssignment entity, long projectId)
         {
             RestRequest r = new RestRequest("/projects/{projectId}/{module}/{id}", Method.PATCH);

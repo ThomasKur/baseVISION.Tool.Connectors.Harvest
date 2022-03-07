@@ -20,11 +20,11 @@ namespace baseVISION.Tool.Connectors.Harvest
             RestRequest r;
             if (projectId.HasValue && projectId.Value != 0)
             {
-                r = new RestRequest("/projects/{projectId}/{module}", Method.GET);
-                r.AddUrlSegment("projectId", projectId);
+                r = new RestRequest("/projects/{projectId}/{module}", Method.Get);
+                r.AddUrlSegment("projectId", projectId.Value);
             } else
             {
-                r = new RestRequest("{module}", Method.GET);
+                r = new RestRequest("{module}", Method.Get);
             }
             
             r.AddUrlSegment("module", module);
@@ -37,48 +37,53 @@ namespace baseVISION.Tool.Connectors.Harvest
             {
                 r.AddQueryParameter("is_active", isActive.Value.ToString().ToLower());
             }
-            r.JsonSerializer = client.serializer;
+            
             return client.Execute<ResultTaskAssignments>(r);
         }
         
         public TaskAssignment Get(long id, long projectId)
         {
-            RestRequest r = new RestRequest("/projects/{projectId}/{module}/{id}", Method.GET);
+            RestRequest r = new RestRequest("/projects/{projectId}/{module}/{id}", Method.Get);
             r.AddUrlSegment("id", id);
             r.AddUrlSegment("projectId", projectId);
             r.AddUrlSegment("module", module);
-            r.JsonSerializer = client.serializer;
+            
             return client.Execute<TaskAssignment>(r);
         }
         public TaskAssignment Add(TaskAssignment entity, long projectId)
         {
                
-            RestRequest r = new RestRequest("/projects/{projectId}/{module}", Method.POST);
+            RestRequest r = new RestRequest("/projects/{projectId}/{module}", Method.Post);
             r.AddUrlSegment("projectId", projectId);
             r.AddUrlSegment("module", module);
-            r.JsonSerializer = client.serializer;
+            
             r.AddJsonBody(entity);
             
             return client.Execute<TaskAssignment>(r);
         }
         public TaskAssignment Update(TaskAssignment entity, long projectId)
         {
-            RestRequest r = new RestRequest("/projects/{projectId}/{module}/{id}", Method.PATCH);
-            r.AddUrlSegment("id", entity.Id);
+            if (entity.Id.HasValue) { 
+            RestRequest r = new RestRequest("/projects/{projectId}/{module}/{id}", Method.Patch);
+            r.AddUrlSegment("id", entity.Id.Value);
             r.AddUrlSegment("projectId", projectId);
             r.AddUrlSegment("module", module);
-            r.JsonSerializer = client.serializer;
+            
             r.AddJsonBody(entity);
             
             return client.Execute<TaskAssignment>(r);
-        }
+        } else
+            {
+                throw new Exception("Id of object must be specified.");
+    }
+}
         public void Delete(long id, long projectId)
         {
-            RestRequest r = new RestRequest("/projects/{projectId}/{module}/{id}", Method.DELETE);
+            RestRequest r = new RestRequest("/projects/{projectId}/{module}/{id}", Method.Delete);
             r.AddUrlSegment("id", id);
             r.AddUrlSegment("projectId", projectId);
             r.AddUrlSegment("module", module);
-            r.JsonSerializer = client.serializer;
+            
             client.Execute(r);
         }
     }

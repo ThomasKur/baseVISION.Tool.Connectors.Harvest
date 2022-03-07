@@ -6,7 +6,7 @@ namespace baseVISION.Tool.Connectors.Harvest
 {
     public partial class HarvestClient
     {
-        private void ResponseErrorCheck(IRestResponse response)
+        private void ResponseErrorCheck(RestResponse response)
         {
             switch (response.ResponseStatus)
             {

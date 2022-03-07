@@ -17,7 +17,7 @@ namespace baseVISION.Tool.Connectors.Harvest
         }
         public ResultUsers List(int page = 1, bool? isActive = null, DateTime? updatedSince = null)
         {
-            RestRequest r = new RestRequest("{module}", Method.GET);
+            RestRequest r = new RestRequest("{module}", Method.Get);
             r.AddUrlSegment("module", module);
             r.AddQueryParameter("page", page.ToString());
 
@@ -29,41 +29,41 @@ namespace baseVISION.Tool.Connectors.Harvest
             {
                 r.AddQueryParameter("updated_since", updatedSince.Value.ToString(client.HarvestDateTimeFormat));
             }
-            r.JsonSerializer = client.serializer;
+            
             return client.Execute<ResultUsers>(r);
         }
         public User Get(long id)
         {
-            RestRequest r = new RestRequest("{module}/{id}", Method.GET);
+            RestRequest r = new RestRequest("{module}/{id}", Method.Get);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", id);
-            r.JsonSerializer = client.serializer;
+            
             return client.Execute<User>(r);
         }
         public User Add(User entity)
         {
-            RestRequest r = new RestRequest("{module}" , Method.POST);
+            RestRequest r = new RestRequest("{module}" , Method.Post);
 
-            r.JsonSerializer = client.serializer; r.AddJsonBody(entity);
+             r.AddJsonBody(entity);
             
             return client.Execute<User>(r);
         }
         public User Update(User entity)
         {
-            RestRequest r = new RestRequest("{module}/{id}", Method.PATCH);
+            RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", entity.Id);
-            r.JsonSerializer = client.serializer;
+            
             r.AddJsonBody(entity);
             
             return client.Execute<User>(r);
         }
         public void Delete(long id)
         {
-            RestRequest r = new RestRequest("{module}/{id}", Method.DELETE);
+            RestRequest r = new RestRequest("{module}/{id}", Method.Delete);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", id);
-            r.JsonSerializer = client.serializer;
+            
             client.Execute(r);
         }
     }

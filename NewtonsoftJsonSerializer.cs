@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using RestSharp.Deserializers;
+using RestSharp;
 using RestSharp.Serializers;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 
 namespace baseVISION.Tool.Connectors.Harvest
 {
-    public class NewtonsoftJsonSerializer : ISerializer, IDeserializer
+    public class NewtonsoftJsonSerializer : IRestSerializer, ISerializer, IDeserializer
     {
         private Newtonsoft.Json.JsonSerializer serializer;
 
@@ -16,18 +16,20 @@ namespace baseVISION.Tool.Connectors.Harvest
         {
             this.serializer = serializer;
         }
-
-        public string ContentType
+        public NewtonsoftJsonSerializer()
         {
-            get { return "application/json"; } // Probably used for Serialization?
-            set { }
+            this.serializer = new Newtonsoft.Json.JsonSerializer()
+            {
+                NullValueHandling = NullValueHandling.Include,
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                MetadataPropertyHandling = MetadataPropertyHandling.ReadAhead,
+
+
+            };
+            this.serializer.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+            
         }
 
-        public string DateFormat { get; set; }
-
-        public string Namespace { get; set; }
-
-        public string RootElement { get; set; }
 
         public string Serialize(object obj)
         {
@@ -42,7 +44,7 @@ namespace baseVISION.Tool.Connectors.Harvest
             }
         }
 
-        public T Deserialize<T>(RestSharp.IRestResponse response)
+        public T Deserialize<T>(RestResponse response)
         {
             var content = response.Content;
             using (var stringReader = new StringReader(content))
@@ -70,6 +72,27 @@ namespace baseVISION.Tool.Connectors.Harvest
                 return new NewtonsoftJsonSerializer(s);
             }
         }
+
+
+        public string Serialize(Parameter bodyParameter) => Serialize(bodyParameter.Value);
+
+
+
+        public string[] AcceptedContentTypes { get; } = {
+            "application/json", "text/json", "text/x-json", "text/javascript", "*+json"
+        };
+
+        public string ContentType { get; set; } = "application/json";
+
+        public DataFormat DataFormat => DataFormat.Json;
+
+        public ISerializer Serializer => this;
+
+        public IDeserializer Deserializer => this;
+
+        public SupportsContentType SupportsContentType => contentType => contentType.Contains("json");
+
+ 
     }
 
 }

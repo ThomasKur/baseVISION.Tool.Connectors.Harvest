@@ -3,6 +3,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace baseVISION.Tool.Connectors.Harvest
 {
@@ -20,11 +21,13 @@ namespace baseVISION.Tool.Connectors.Harvest
             this.personalAccessToken = personalAccessToken;
             serializer = NewtonsoftJsonSerializer.Default;
             restDataClient = new RestClient(url);
-            restDataClient.AddHandler("application/json", serializer);
+            restDataClient.UseSerializer(() => new NewtonsoftJsonSerializer());
+        /*    restDataClient.AddHandler("application/json", serializer);
             restDataClient.AddHandler("text/json", serializer);
             restDataClient.AddHandler("text/x-json", serializer);
             restDataClient.AddHandler("text/javascript", serializer);
-            restDataClient.AddHandler("*+json", serializer);
+            restDataClient.AddHandler("*+json", serializer);*/
+
 
             restDataClient.AddDefaultHeader("Authorization", "Bearer  " + this.personalAccessToken);
             restDataClient.AddDefaultHeader("Harvest-Account-Id",this.accountId);
@@ -43,19 +46,19 @@ namespace baseVISION.Tool.Connectors.Harvest
         {
             
             request.RequestFormat = DataFormat.Json;
-
-            IRestResponse<T> response = restDataClient.Execute<T>(request);
-            ResponseErrorCheck(response);
-            return response.Data;
+            Task<RestResponse<T>> response = restDataClient.ExecuteAsync<T>(request);
+            response.Start();
+            response.Wait();
+            ResponseErrorCheck(response.Result);
+            return response.Result.Data;
         }
         internal void Execute(RestRequest request)
         {
-
             request.RequestFormat = DataFormat.Json;
-
-            IRestResponse response = restDataClient.Execute(request);
-            ResponseErrorCheck(response);
-
+            Task<RestResponse> response = restDataClient.ExecuteAsync(request);
+            response.Start();
+            response.Wait();
+            ResponseErrorCheck(response.Result);
         }
         public ModuleClients Clients { get; private set; }
         public ModuleContacts Contacts { get; private set; }

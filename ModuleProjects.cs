@@ -17,7 +17,7 @@ namespace baseVISION.Tool.Connectors.Harvest
         }
         public ResultProjects List(int page = 1, bool? isActive = null, long? clientid = null, DateTime? updatedSince = null)
         {
-            RestRequest r = new RestRequest("{module}", Method.GET);
+            RestRequest r = new RestRequest("{module}", Method.Get);
             r.AddQueryParameter("page", page.ToString());
             r.AddUrlSegment("module", module);
             if (isActive.HasValue)
@@ -32,42 +32,47 @@ namespace baseVISION.Tool.Connectors.Harvest
             {
                 r.AddQueryParameter("client_id", clientid.Value.ToString());
             }
-            r.JsonSerializer = client.serializer;
+            
             return client.Execute<ResultProjects>(r);
         }
         public Project Get(long id)
         {
-            RestRequest r = new RestRequest("{module}/{id}", Method.GET);
+            RestRequest r = new RestRequest("{module}/{id}", Method.Get);
             r.AddUrlSegment("id", id);
             r.AddUrlSegment("module", module);
-            r.JsonSerializer = client.serializer;
+            
             return client.Execute<Project>(r);
         }
         public Project Add(Project entity)
         {
-            RestRequest r = new RestRequest("{module}", Method.POST);
+            RestRequest r = new RestRequest("{module}", Method.Post);
             r.AddUrlSegment("module", module);
 
-            r.JsonSerializer = client.serializer; r.AddJsonBody(entity);
+             r.AddJsonBody(entity);
             
             return client.Execute<Project>(r);
         }
         public Project Update(Project entity)
         {
-            RestRequest r = new RestRequest("{module}/{id}", Method.PATCH);
-            r.AddUrlSegment("id", entity.Id);
+            if (entity.Id.HasValue) { 
+            RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
+            r.AddUrlSegment("id", entity.Id.Value);
             r.AddUrlSegment("module", module);
-            r.JsonSerializer = client.serializer;
+            
             r.AddJsonBody(entity);
             
             return client.Execute<Project>(r);
-        }
+        } else
+            {
+                throw new Exception("Id of object must be specified.");
+    }
+}
         public void Delete(long id)
         {
-            RestRequest r = new RestRequest("{module}/{id}", Method.DELETE);
+            RestRequest r = new RestRequest("{module}/{id}", Method.Delete);
             r.AddUrlSegment("id", id);
             r.AddUrlSegment("module", module);
-            r.JsonSerializer = client.serializer;
+            
             client.Execute(r);
         }
     }

@@ -18,7 +18,7 @@ namespace baseVISION.Tool.Connectors.Harvest
         }
         public ResultTimeEntries List(int page = 1,long? userId = null,long? projectId = null,long? clientId = null, bool? isBilled = null, bool? isRunning = null, DateTime? updatedSince = null, DateTime? from = null, DateTime? to = null)
         {
-            RestRequest r = new RestRequest("{module}", Method.GET);
+            RestRequest r = new RestRequest("{module}", Method.Get);
             r.AddUrlSegment("module", module);
             r.AddQueryParameter("page", page.ToString());
             if (userId.HasValue)
@@ -53,41 +53,47 @@ namespace baseVISION.Tool.Connectors.Harvest
             {
                 r.AddQueryParameter("to", to.Value.ToString(client.HarvestDateFormat));
             }
-            r.JsonSerializer = client.serializer;
+            
             return client.Execute<ResultTimeEntries>(r);
         }
         public TimeEntry Get(long id)
         {
-            RestRequest r = new RestRequest("{module}/{id}", Method.GET);
+            RestRequest r = new RestRequest("{module}/{id}", Method.Get);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", id);
-            r.JsonSerializer = client.serializer;
+            
             return client.Execute<TimeEntry>(r);
         }
         public TimeEntry Add(TimeEntry entity)
         {
-            RestRequest r = new RestRequest("{module}" , Method.POST);
+            RestRequest r = new RestRequest("{module}" , Method.Post);
 
-            r.JsonSerializer = client.serializer; r.AddJsonBody(entity);
+             r.AddJsonBody(entity);
             
             return client.Execute<TimeEntry>(r);
         }
         public TimeEntry Update(TimeEntry entity)
         {
-            RestRequest r = new RestRequest("{module}/{id}", Method.PATCH);
+
+            if (entity.Id.HasValue) { 
+            RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
             r.AddUrlSegment("module", module);
-            r.AddUrlSegment("id", entity.Id);
-            r.JsonSerializer = client.serializer;
+            r.AddUrlSegment("id", entity.Id.Value);
+            
             r.AddJsonBody(entity);
             
             return client.Execute<TimeEntry>(r);
-        }
+        } else
+            {
+                throw new Exception("Id of object must be specified.");
+    }
+}
         public void Delete(long id)
         {
-            RestRequest r = new RestRequest("{module}/{id}", Method.DELETE);
+            RestRequest r = new RestRequest("{module}/{id}", Method.Delete);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", id);
-            r.JsonSerializer = client.serializer;
+            
             client.Execute(r);
         }
     }

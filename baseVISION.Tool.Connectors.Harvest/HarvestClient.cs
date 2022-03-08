@@ -11,11 +11,11 @@ namespace baseVISION.Tool.Connectors.Harvest
     {
         private string accountId = null;
         private string personalAccessToken = null;
-        public NewtonsoftJsonSerializer serializer = null;
-        public RestClient restDataClient = null;
+        private NewtonsoftJsonSerializer serializer = null;
+        private RestClient restDataClient = null;
         public readonly string HarvestDateTimeFormat = "yyyy-MM-ddThh:mm:ssZ";
         public readonly string HarvestDateFormat = "yyyy-MM-dd";
-        public HarvestClient(string accountId, string personalAccessToken,string url = "https://api.harvestapp.com/api/v2")
+        public HarvestClient(string accountId, string personalAccessToken,string url = "https://api.harvestapp.com/v2")
         {
             this.accountId = accountId;
             this.personalAccessToken = personalAccessToken;
@@ -27,7 +27,7 @@ namespace baseVISION.Tool.Connectors.Harvest
             restDataClient.AddHandler("text/x-json", serializer);
             restDataClient.AddHandler("text/javascript", serializer);
             restDataClient.AddHandler("*+json", serializer);*/
-
+            
 
             restDataClient.AddDefaultHeader("Authorization", "Bearer  " + this.personalAccessToken);
             restDataClient.AddDefaultHeader("Harvest-Account-Id",this.accountId);
@@ -44,19 +44,25 @@ namespace baseVISION.Tool.Connectors.Harvest
         }
         internal T Execute<T>(RestRequest request) where T : new()
         {
-            
-            request.RequestFormat = DataFormat.Json;
+            if (request.Method != Method.Get)
+            {
+                //request.RequestFormat = DataFormat.Json;
+                request.AddHeader("Content-Type", "application/json");
+            }
+            request.AddHeader("Accept", "application/json");
             Task<RestResponse<T>> response = restDataClient.ExecuteAsync<T>(request);
-            response.Start();
             response.Wait();
             ResponseErrorCheck(response.Result);
             return response.Result.Data;
         }
         internal void Execute(RestRequest request)
         {
-            request.RequestFormat = DataFormat.Json;
+            if (request.Method != Method.Get) { 
+                //request.RequestFormat = DataFormat.Json;
+                request.AddHeader("Content-Type", "application/json");
+            }
+            request.AddHeader("Accept", "application/json");
             Task<RestResponse> response = restDataClient.ExecuteAsync(request);
-            response.Start();
             response.Wait();
             ResponseErrorCheck(response.Result);
         }

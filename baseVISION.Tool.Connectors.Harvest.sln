@@ -1,11 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "baseVISION.Tool.Connectors.Harvest", "baseVISION.Tool.Connectors.Harvest\baseVISION.Tool.Connectors.Harvest.csproj", "{D9A6376D-AACF-486B-9D95-C84742140F0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "baseVISION.Tool.Connectors.Harvest.Test", "baseVISION.Tool.Connectors.Harvest.Test\baseVISION.Tool.Connectors.Harvest.Test.csproj", "{FBF5B509-F98F-4591-8F06-7F4E6F26EA3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "baseVISION.Tool.Connectors.Harvest.Test", "baseVISION.Tool.Connectors.Harvest.Test\baseVISION.Tool.Connectors.Harvest.Test.csproj", "{FBF5B509-F98F-4591-8F06-7F4E6F26EA3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

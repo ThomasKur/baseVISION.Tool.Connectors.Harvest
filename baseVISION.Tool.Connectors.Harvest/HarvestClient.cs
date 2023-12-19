@@ -20,8 +20,7 @@ namespace baseVISION.Tool.Connectors.Harvest
             this.accountId = accountId;
             this.personalAccessToken = personalAccessToken;
             serializer = NewtonsoftJsonSerializer.Default;
-            restDataClient = new RestClient(url);
-            restDataClient.UseSerializer(() => new NewtonsoftJsonSerializer());
+            restDataClient = new RestClient(url, configureSerialization: s => s.UseSerializer(() => new NewtonsoftJsonSerializer()));
         /*    restDataClient.AddHandler("application/json", serializer);
             restDataClient.AddHandler("text/json", serializer);
             restDataClient.AddHandler("text/x-json", serializer);

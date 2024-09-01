@@ -10,7 +10,8 @@ Instead of other library it is using the new version 2 OAuth based API.</Descrip
     <PackageProjectUrl>https://github.com/ThomasKur/baseVISION.Tool.Connectors.Harvest/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ThomasKur/baseVISION.Tool.Connectors.Harvest/</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageReleaseNotes>2.1.0: Update to .NET8 and new libraries
+    <PackageReleaseNotes>2.1.1: Update Libraries
+2.1.0: Update to .NET8 and new libraries
 2.0.1: Stable release with new libraries
 2.0.0-alpha: Support Restsharp 107 and Newtonsoft 13
 1.0.1: Make ShouldSerialize methods virtual to allow override. 
@@ -23,15 +24,12 @@ Instead of other library it is using the new version 2 OAuth based API.</Descrip
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <None Include="..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
   <ItemGroup>
-=======
->>>>>>> 80c5e5510b0bd5a8c2940b6a8df904e0bf3b6c3a
     <PackageReference Include="RestSharp" Version="112.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>

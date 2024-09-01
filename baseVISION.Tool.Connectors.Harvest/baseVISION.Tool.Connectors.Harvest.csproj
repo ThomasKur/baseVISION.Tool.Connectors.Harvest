@@ -23,12 +23,15 @@ Instead of other library it is using the new version 2 OAuth based API.</Descrip
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <None Include="..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
   <ItemGroup>
+=======
+>>>>>>> 80c5e5510b0bd5a8c2940b6a8df904e0bf3b6c3a
     <PackageReference Include="RestSharp" Version="112.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>

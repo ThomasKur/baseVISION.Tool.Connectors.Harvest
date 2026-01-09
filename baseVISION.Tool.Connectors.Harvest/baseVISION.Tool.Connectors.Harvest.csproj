@@ -10,7 +10,8 @@ Instead of other library it is using the new version 2 OAuth based API.</Descrip
     <PackageProjectUrl>https://github.com/ThomasKur/baseVISION.Tool.Connectors.Harvest/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ThomasKur/baseVISION.Tool.Connectors.Harvest/</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <PackageReleaseNotes>2.1.1: Update Libraries
+    <PackageReleaseNotes>2.1.2: Add retry handling and event listener
+2.1.1: Update Libraries
 2.1.0: Update to .NET8 and new libraries
 2.0.1: Stable release with new libraries
 2.0.0-alpha: Support Restsharp 107 and Newtonsoft 13
@@ -18,9 +19,9 @@ Instead of other library it is using the new version 2 OAuth based API.</Descrip
 1.0.0: First Release</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <AssemblyVersion>2.1.1.0</AssemblyVersion>
+    <AssemblyVersion>2.1.2.0</AssemblyVersion>
     <FileVersion>2.1.1.0</FileVersion>
-    <Version>2.1.1</Version>
+    <Version>2.1.2</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>

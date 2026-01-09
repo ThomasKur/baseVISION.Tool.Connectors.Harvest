@@ -15,7 +15,7 @@ namespace baseVISION.Tool.Connectors.Harvest
         {
             this.client = client;
         }
-        public ResultTasks List(int page = 1, bool? isActive = null, DateTime? updatedSince = null)
+        public ResultTasks List(int page = 1, bool? isActive = null, DateTime? updatedSince = null, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}", Method.Get);
             r.AddUrlSegment("module", module);
@@ -29,46 +29,44 @@ namespace baseVISION.Tool.Connectors.Harvest
             {
                 r.AddQueryParameter("updated_since", updatedSince.Value.ToString(client.HarvestDateTimeFormat));
             }
-            
-            return client.Execute<ResultTasks>(r);
+
+            return client.Execute<ResultTasks>(r, maxRetries);
         }
-        public Task Get(long id)
+        public Task Get(long id, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Get);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", id);
-            
-            return client.Execute<Task>(r);
-        }
-        public Task Add(Task entity)
-        {
-            RestRequest r = new RestRequest("{module}" , Method.Post);
 
-             r.AddJsonBody(entity);
-            
-            return client.Execute<Task>(r);
+            return client.Execute<Task>(r, maxRetries);
         }
-        public Task Update(Task entity)
+        public Task Add(Task entity, int maxRetries = 0)
         {
-            if (entity.Id.HasValue) { 
-            RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
-            r.AddUrlSegment("module", module);
-            r.AddUrlSegment("id", entity.Id.Value);
-            
+            RestRequest r = new RestRequest("{module}", Method.Post);
             r.AddJsonBody(entity);
-            
-            return client.Execute<Task>(r);
-        } else
+
+            return client.Execute<Task>(r, maxRetries);
+        }
+        public Task Update(Task entity, int maxRetries = 0)
+        {
+            if (entity.Id.HasValue)
             {
-                throw new Exception("Id of object must be specified.");
-    }
-}
+                RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
+                r.AddUrlSegment("module", module);
+                r.AddUrlSegment("id", entity.Id.Value);
+                r.AddJsonBody(entity);
+
+                return client.Execute<Task>(r, maxRetries);
+            }
+
+            throw new Exception("Id of object must be specified.");
+        }
         public void Delete(long id)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Delete);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", id);
-            
+
             client.Execute(r);
         }
     }

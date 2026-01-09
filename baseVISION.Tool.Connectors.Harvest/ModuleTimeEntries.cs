@@ -1,5 +1,4 @@
-﻿
-using baseVISION.Tool.Connectors.Harvest.Contracts;
+﻿using baseVISION.Tool.Connectors.Harvest.Contracts;
 using baseVISION.Tool.Connectors.Harvest.Model;
 using RestSharp;
 using System;
@@ -16,7 +15,7 @@ namespace baseVISION.Tool.Connectors.Harvest
         {
             this.client = client;
         }
-        public ResultTimeEntries List(int page = 1,long? userId = null,long? projectId = null,long? clientId = null, bool? isBilled = null, bool? isRunning = null, DateTime? updatedSince = null, DateTime? from = null, DateTime? to = null)
+        public ResultTimeEntries List(int page = 1,long? userId = null,long? projectId = null,long? clientId = null, bool? isBilled = null, bool? isRunning = null, DateTime? updatedSince = null, DateTime? from = null, DateTime? to = null, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}", Method.Get);
             r.AddUrlSegment("module", module);
@@ -54,40 +53,39 @@ namespace baseVISION.Tool.Connectors.Harvest
                 r.AddQueryParameter("to", to.Value.ToString(client.HarvestDateFormat));
             }
             
-            return client.Execute<ResultTimeEntries>(r);
+            return client.Execute<ResultTimeEntries>(r, maxRetries);
         }
-        public TimeEntry Get(long id)
+        public TimeEntry Get(long id, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Get);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", id);
             
-            return client.Execute<TimeEntry>(r);
+            return client.Execute<TimeEntry>(r, maxRetries);
         }
-        public TimeEntry Add(TimeEntry entity)
+        public TimeEntry Add(TimeEntry entity, int maxRetries = 0)
         {
-            RestRequest r = new RestRequest("{module}" , Method.Post);
-
-             r.AddJsonBody(entity);
-            
-            return client.Execute<TimeEntry>(r);
-        }
-        public TimeEntry Update(TimeEntry entity)
-        {
-
-            if (entity.Id.HasValue) { 
-            RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
-            r.AddUrlSegment("module", module);
-            r.AddUrlSegment("id", entity.Id.Value);
-            
+            RestRequest r = new RestRequest("{module}", Method.Post);
             r.AddJsonBody(entity);
             
-            return client.Execute<TimeEntry>(r);
-        } else
+            return client.Execute<TimeEntry>(r, maxRetries);
+        }
+        public TimeEntry Update(TimeEntry entity, int maxRetries = 0)
+        {
+
+            if (entity.Id.HasValue)
             {
-                throw new Exception("Id of object must be specified.");
-    }
-}
+                RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
+                r.AddUrlSegment("module", module);
+                r.AddUrlSegment("id", entity.Id.Value);
+                
+                r.AddJsonBody(entity);
+                
+                return client.Execute<TimeEntry>(r, maxRetries);
+            }
+
+            throw new Exception("Id of object must be specified.");
+        }
         public void Delete(long id)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Delete);

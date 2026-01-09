@@ -15,7 +15,7 @@ namespace baseVISION.Tool.Connectors.Harvest
         {
             this.client = client;
         }
-        public ResultClients List(int page = 1, bool? isActive = null, DateTime? updatedSince = null)
+        public ResultClients List(int page = 1, bool? isActive = null, DateTime? updatedSince = null, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}", Method.Get);
             r.AddUrlSegment("module", module);
@@ -30,25 +30,24 @@ namespace baseVISION.Tool.Connectors.Harvest
                 r.AddQueryParameter("updated_since", updatedSince.Value.ToString(client.HarvestDateTimeFormat));
             }
 
-            
-            return client.Execute<ResultClients>(r);
+            return client.Execute<ResultClients>(r, maxRetries);
         }
-        public Client Get(long id)
+        public Client Get(long id, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Get);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", id);
-            
-            return client.Execute<Client>(r);
+
+            return client.Execute<Client>(r, maxRetries);
         }
-        public Client Add(Client entity)
+        public Client Add(Client entity, int maxRetries = 0)
         {
-            RestRequest r = new RestRequest("{module}" , Method.Post);
+            RestRequest r = new RestRequest("{module}", Method.Post);
             r.AddUrlSegment("module", module);
             r.AddJsonBody(entity);
-            return client.Execute<Client>(r);
+            return client.Execute<Client>(r, maxRetries);
         }
-        public Client Update(Client entity)
+        public Client Update(Client entity, int maxRetries = 0)
         {
             if (entity.Id.HasValue) {
                 RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
@@ -56,7 +55,7 @@ namespace baseVISION.Tool.Connectors.Harvest
                 r.AddUrlSegment("id", entity.Id.Value);
                 r.AddJsonBody(entity);
 
-                return client.Execute<Client>(r);
+                return client.Execute<Client>(r, maxRetries);
             } else
             {
                 throw new Exception("Id of object must be specified.");

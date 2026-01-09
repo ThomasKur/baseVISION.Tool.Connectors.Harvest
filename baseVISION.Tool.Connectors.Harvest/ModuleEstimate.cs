@@ -15,7 +15,7 @@ namespace baseVISION.Tool.Connectors.Harvest
         {
             this.client = client;
         }
-        public ResultEstimates List(int page = 1, long? clientId = null, EstimateState? state = null, DateTime? updatedSince = null)
+        public ResultEstimates List(int page = 1, long? clientId = null, EstimateState? state = null, DateTime? updatedSince = null, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}", Method.Get);
             r.AddUrlSegment("module", module);
@@ -33,42 +33,41 @@ namespace baseVISION.Tool.Connectors.Harvest
             {
                 r.AddQueryParameter("updated_since", updatedSince.Value.ToString(client.HarvestDateTimeFormat));
             }
-            
-            return client.Execute<ResultEstimates>(r);
+
+            return client.Execute<ResultEstimates>(r, maxRetries);
         }
-        public Estimate Get(long id)
+        public Estimate Get(long id, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Get);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", id);
-            
-            return client.Execute<Estimate>(r);
-        }
-        public Estimate Add(Estimate entity)
-        {
-            RestRequest r = new RestRequest("{module}" , Method.Post);
 
-            
-            r.AddJsonBody(entity);
-            
-            return client.Execute<Estimate>(r);
+            return client.Execute<Estimate>(r, maxRetries);
         }
-        public Estimate Update(Estimate entity)
+        public Estimate Add(Estimate entity, int maxRetries = 0)
+        {
+            RestRequest r = new RestRequest("{module}", Method.Post);
+
+            r.AddJsonBody(entity);
+
+            return client.Execute<Estimate>(r, maxRetries);
+        }
+        public Estimate Update(Estimate entity, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", entity.Id);
-            
+
             r.AddJsonBody(entity);
-            
-            return client.Execute<Estimate>(r);
+
+            return client.Execute<Estimate>(r, maxRetries);
         }
         public void Delete(long id)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Delete);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", id);
-            
+
             client.Execute(r);
         }
     }

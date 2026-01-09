@@ -15,7 +15,7 @@ namespace baseVISION.Tool.Connectors.Harvest
         {
             this.client = client;
         }
-        public ResultUsers List(int page = 1, bool? isActive = null, DateTime? updatedSince = null)
+        public ResultUsers List(int page = 1, bool? isActive = null, DateTime? updatedSince = null, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}", Method.Get);
             r.AddUrlSegment("module", module);
@@ -30,25 +30,24 @@ namespace baseVISION.Tool.Connectors.Harvest
                 r.AddQueryParameter("updated_since", updatedSince.Value.ToString(client.HarvestDateTimeFormat));
             }
             
-            return client.Execute<ResultUsers>(r);
+            return client.Execute<ResultUsers>(r, maxRetries);
         }
-        public User Get(long id)
+        public User Get(long id, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Get);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", id);
             
-            return client.Execute<User>(r);
+            return client.Execute<User>(r, maxRetries);
         }
-        public User Add(User entity)
+        public User Add(User entity, int maxRetries = 0)
         {
-            RestRequest r = new RestRequest("{module}" , Method.Post);
-
-             r.AddJsonBody(entity);
+            RestRequest r = new RestRequest("{module}", Method.Post);
+            r.AddJsonBody(entity);
             
-            return client.Execute<User>(r);
+            return client.Execute<User>(r, maxRetries);
         }
-        public User Update(User entity)
+        public User Update(User entity, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
             r.AddUrlSegment("module", module);
@@ -56,7 +55,7 @@ namespace baseVISION.Tool.Connectors.Harvest
             
             r.AddJsonBody(entity);
             
-            return client.Execute<User>(r);
+            return client.Execute<User>(r, maxRetries);
         }
         public void Delete(long id)
         {

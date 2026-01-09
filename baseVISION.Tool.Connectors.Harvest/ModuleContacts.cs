@@ -14,9 +14,8 @@ namespace baseVISION.Tool.Connectors.Harvest
         public ModuleContacts(HarvestClient client)
         {
             this.client = client;
-
         }
-        public ResultContacts List(int page = 1, bool? isActive = null, long? clientId = null, DateTime? updatedSince = null)
+        public ResultContacts List(int page = 1, bool? isActive = null, long? clientId = null, DateTime? updatedSince = null, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}", Method.Get);
             r.AddUrlSegment("module", module);
@@ -34,47 +33,45 @@ namespace baseVISION.Tool.Connectors.Harvest
             {
                 r.AddQueryParameter("updated_since", updatedSince.Value.ToString(client.HarvestDateTimeFormat));
             }
-            
-            return client.Execute<ResultContacts>(r);
+
+            return client.Execute<ResultContacts>(r, maxRetries);
         }
-        public Contact Get(long id)
+        public Contact Get(long id, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Get);
             r.AddUrlSegment("module", module);
             r.AddUrlSegment("id", id);
-            
-            return client.Execute<Contact>(r);
-        }
-        public Contact Add(Contact entity)
-        {
-            RestRequest r = new RestRequest("{module}" , Method.Post);
-            r.AddUrlSegment("module", module);
 
-             r.AddJsonBody(entity);
-            
-            return client.Execute<Contact>(r);
+            return client.Execute<Contact>(r, maxRetries);
         }
-        public Contact Update(Contact entity)
+        public Contact Add(Contact entity, int maxRetries = 0)
         {
-            if (entity.Id.HasValue) { 
-            RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
+            RestRequest r = new RestRequest("{module}", Method.Post);
             r.AddUrlSegment("module", module);
-            r.AddUrlSegment("id", entity.Id.Value);
-            
             r.AddJsonBody(entity);
-            
-            return client.Execute<Contact>(r);
-        } else
+
+            return client.Execute<Contact>(r, maxRetries);
+        }
+        public Contact Update(Contact entity, int maxRetries = 0)
+        {
+            if (entity.Id.HasValue)
             {
-                throw new Exception("Id of object must be specified.");
-    }
-}
+                RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
+                r.AddUrlSegment("module", module);
+                r.AddUrlSegment("id", entity.Id.Value);
+                r.AddJsonBody(entity);
+
+                return client.Execute<Contact>(r, maxRetries);
+            }
+
+            throw new Exception("Id of object must be specified.");
+        }
         public void Delete(long id)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Delete);
             r.AddUrlSegment("id", id);
             r.AddUrlSegment("module", module);
-            
+
             client.Execute<Contact>(r);
         }
     }

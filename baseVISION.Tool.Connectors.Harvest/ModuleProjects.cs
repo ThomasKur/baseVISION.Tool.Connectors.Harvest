@@ -15,7 +15,7 @@ namespace baseVISION.Tool.Connectors.Harvest
         {
             this.client = client;
         }
-        public ResultProjects List(int page = 1, bool? isActive = null, long? clientid = null, DateTime? updatedSince = null)
+        public ResultProjects List(int page = 1, bool? isActive = null, long? clientid = null, DateTime? updatedSince = null, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}", Method.Get);
             r.AddQueryParameter("page", page.ToString());
@@ -32,47 +32,49 @@ namespace baseVISION.Tool.Connectors.Harvest
             {
                 r.AddQueryParameter("client_id", clientid.Value.ToString());
             }
-            
-            return client.Execute<ResultProjects>(r);
+
+            return client.Execute<ResultProjects>(r, maxRetries);
         }
-        public Project Get(long id)
+        public Project Get(long id, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Get);
             r.AddUrlSegment("id", id);
             r.AddUrlSegment("module", module);
-            
-            return client.Execute<Project>(r);
+
+            return client.Execute<Project>(r, maxRetries);
         }
-        public Project Add(Project entity)
+        public Project Add(Project entity, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("{module}", Method.Post);
             r.AddUrlSegment("module", module);
 
              r.AddJsonBody(entity);
-            
-            return client.Execute<Project>(r);
+
+            return client.Execute<Project>(r, maxRetries);
         }
-        public Project Update(Project entity)
+        public Project Update(Project entity, int maxRetries = 0)
         {
-            if (entity.Id.HasValue) { 
-            RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
-            r.AddUrlSegment("id", entity.Id.Value);
-            r.AddUrlSegment("module", module);
-            
-            r.AddJsonBody(entity);
-            
-            return client.Execute<Project>(r);
-        } else
+            if (entity.Id.HasValue)
+            {
+                RestRequest r = new RestRequest("{module}/{id}", Method.Patch);
+                r.AddUrlSegment("id", entity.Id.Value);
+                r.AddUrlSegment("module", module);
+
+                r.AddJsonBody(entity);
+
+                return client.Execute<Project>(r, maxRetries);
+            }
+            else
             {
                 throw new Exception("Id of object must be specified.");
-    }
-}
+            }
+        }
         public void Delete(long id)
         {
             RestRequest r = new RestRequest("{module}/{id}", Method.Delete);
             r.AddUrlSegment("id", id);
             r.AddUrlSegment("module", module);
-            
+
             client.Execute(r);
         }
     }

@@ -15,7 +15,7 @@ namespace baseVISION.Tool.Connectors.Harvest
         {
             this.client = client;
         }
-        public ResultTaskAssignments List(int page = 1, bool? isActive = null, long? projectId = null, DateTime? updatedSince = null)
+        public ResultTaskAssignments List(int page = 1, bool? isActive = null, long? projectId = null, DateTime? updatedSince = null, int maxRetries = 0)
         {
             RestRequest r;
             if (projectId.HasValue && projectId.Value != 0)
@@ -38,19 +38,19 @@ namespace baseVISION.Tool.Connectors.Harvest
                 r.AddQueryParameter("is_active", isActive.Value.ToString().ToLower());
             }
             
-            return client.Execute<ResultTaskAssignments>(r);
+            return client.Execute<ResultTaskAssignments>(r, maxRetries);
         }
         
-        public TaskAssignment Get(long id, long projectId)
+        public TaskAssignment Get(long id, long projectId, int maxRetries = 0)
         {
             RestRequest r = new RestRequest("/projects/{projectId}/{module}/{id}", Method.Get);
             r.AddUrlSegment("id", id);
             r.AddUrlSegment("projectId", projectId);
             r.AddUrlSegment("module", module);
             
-            return client.Execute<TaskAssignment>(r);
+            return client.Execute<TaskAssignment>(r, maxRetries);
         }
-        public TaskAssignment Add(TaskAssignment entity, long projectId)
+        public TaskAssignment Add(TaskAssignment entity, long projectId, int maxRetries = 0)
         {
                
             RestRequest r = new RestRequest("/projects/{projectId}/{module}", Method.Post);
@@ -59,24 +59,24 @@ namespace baseVISION.Tool.Connectors.Harvest
             
             r.AddJsonBody(entity);
             
-            return client.Execute<TaskAssignment>(r);
+            return client.Execute<TaskAssignment>(r, maxRetries);
         }
-        public TaskAssignment Update(TaskAssignment entity, long projectId)
+        public TaskAssignment Update(TaskAssignment entity, long projectId, int maxRetries = 0)
         {
-            if (entity.Id.HasValue) { 
-            RestRequest r = new RestRequest("/projects/{projectId}/{module}/{id}", Method.Patch);
-            r.AddUrlSegment("id", entity.Id.Value);
-            r.AddUrlSegment("projectId", projectId);
-            r.AddUrlSegment("module", module);
-            
-            r.AddJsonBody(entity);
-            
-            return client.Execute<TaskAssignment>(r);
-        } else
+            if (entity.Id.HasValue)
             {
-                throw new Exception("Id of object must be specified.");
-    }
-}
+                RestRequest r = new RestRequest("/projects/{projectId}/{module}/{id}", Method.Patch);
+                r.AddUrlSegment("id", entity.Id.Value);
+                r.AddUrlSegment("projectId", projectId);
+                r.AddUrlSegment("module", module);
+                
+                r.AddJsonBody(entity);
+                
+                return client.Execute<TaskAssignment>(r, maxRetries);
+            }
+
+            throw new Exception("Id of object must be specified.");
+        }
         public void Delete(long id, long projectId)
         {
             RestRequest r = new RestRequest("/projects/{projectId}/{module}/{id}", Method.Delete);

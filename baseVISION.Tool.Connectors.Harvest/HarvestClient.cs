@@ -14,7 +14,7 @@ namespace baseVISION.Tool.Connectors.Harvest
         private string accountId = null;
         private string personalAccessToken = null;
         private NewtonsoftJsonSerializer serializer = null;
-        private RestClient restDataClient = null;
+        private IRestClient restDataClient = null;
         public readonly string HarvestDateTimeFormat = "yyyy-MM-ddThh:mm:ssZ";
         public readonly string HarvestDateFormat = "yyyy-MM-dd";
 

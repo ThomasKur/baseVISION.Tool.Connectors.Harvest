@@ -42,6 +42,56 @@ Client newCreatedClient = c.Clients.Add(newClient);
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
+## Release Notes
+
+### 2.1.3
+- Features:
+  - None
+- Bug fixes:
+  - Update libraries: RestSharp, Json.Net
+
+### 2.1.2
+- Features:
+  - Add retry handling and event listener
+- Bug fixes:
+  - None
+
+### 2.1.1
+- Features:
+  - None
+- Bug fixes:
+  - Update libraries
+
+### 2.1.0
+- Features:
+  - Update to .NET 8 and new libraries
+- Bug fixes:
+  - None
+
+### 2.0.1
+- Features:
+  - None
+- Bug fixes:
+  - Stable release with new libraries
+
+### 2.0.0-alpha
+- Features:
+  - Support RestSharp 107 and Newtonsoft 13
+- Bug fixes:
+  - None
+
+### 1.0.1
+- Features:
+  - Make `ShouldSerialize` methods virtual to allow override
+- Bug fixes:
+  - None
+
+### 1.0.0
+- Features:
+  - First release
+- Bug fixes:
+  - None
+
 ## Authors
 
 * **Thomas Kurth** - *Initial work* 

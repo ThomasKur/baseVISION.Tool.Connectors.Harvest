@@ -28,4 +28,7 @@ Instead of other library it is using the new version 2 OAuth based API.</Descrip
     <PackageReference Include="RestSharp" Version="114.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
+	<Target Name="PostBuild" AfterTargets="Pack">
+		<Exec Command="xcopy &quot;$(TargetDir)..\*.nupkg&quot; &quot;C:\LocalLibrary&quot; /C /Y" />
+	</Target>
 </Project>

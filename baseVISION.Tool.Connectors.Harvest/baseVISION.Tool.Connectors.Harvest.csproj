@@ -31,7 +31,7 @@ Instead of other library it is using the new version 2 OAuth based API.</Descrip
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="RestSharp" Version="112.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RestSharp" Version="114.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 </Project>
